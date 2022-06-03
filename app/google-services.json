@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "703906149208",
+    "project_id": "mystorephi",
+    "storage_bucket": "mystorephi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703906149208:android:c813199e338c66c48eeb2d",
+        "android_client_info": {
+          "package_name": "br.com.raveline.mystorephi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703906149208-ovsqn6krkdm5qb8knaar3u3j3bo1flkf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.raveline.mystorephi",
+            "certificate_hash": "09c1203f27ec01b4eeab8d4b41f0266ad8768e6f"
+          }
+        },
+        {
+          "client_id": "703906149208-crrk7l168u8mr2dlpr057vlvgfgr8093.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL4seVqfyhodqFPlhxU8mbC3QsfKITfYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703906149208-crrk7l168u8mr2dlpr057vlvgfgr8093.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
