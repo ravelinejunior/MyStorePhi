@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.databinding.FragmentLoginBinding
+import br.com.raveline.mystorephi.presentation.listener.UiState
 import br.com.raveline.mystorephi.presentation.viewmodel.UserViewModel
 import br.com.raveline.mystorephi.presentation.viewmodel.viewmodel_factory.UserViewModelFactory
 import br.com.raveline.mystorephi.utils.CustomDialogLoading
@@ -72,13 +73,13 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             userViewModel.uiStateFlow.collect { state ->
                 when (state) {
-                    UserViewModel.UiState.Initial -> {
+                    UiState.Initial -> {
 
                     }
-                    UserViewModel.UiState.Loading -> {
+                    UiState.Loading -> {
                         CustomDialogLoading().startLoading(requireActivity())
                     }
-                    UserViewModel.UiState.Error -> {
+                    UiState.Error -> {
                         CustomDialogLoading().dismissLoading()
                         Toast.makeText(
                             context,
@@ -86,7 +87,7 @@ class LoginFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    UserViewModel.UiState.NoConnection -> {
+                    UiState.NoConnection -> {
                         CustomDialogLoading().dismissLoading()
                         Toast.makeText(
                             context,
@@ -94,7 +95,7 @@ class LoginFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    UserViewModel.UiState.Success -> {
+                    UiState.Success -> {
                         CustomDialogLoading().dismissLoading()
                         findNavController().navigate(R.id.action_LoginFragment_to_homeFragment)
                     }

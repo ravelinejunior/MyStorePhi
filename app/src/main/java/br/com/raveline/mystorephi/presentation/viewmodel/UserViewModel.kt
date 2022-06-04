@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.raveline.mystorephi.data.model.UserModel
 import br.com.raveline.mystorephi.domain.repositoryImpl.UserRepositoryImpl
+import br.com.raveline.mystorephi.presentation.listener.UiState
 import br.com.raveline.mystorephi.utils.*
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
@@ -128,12 +129,8 @@ class UserViewModel @Inject constructor(
         )
     }
 
-    sealed class UiState {
-        object Success : UiState()
-        object Error : UiState()
-        object NoConnection : UiState()
-        object Loading : UiState()
-        object Initial : UiState()
-    }
 }
+
+
+
 

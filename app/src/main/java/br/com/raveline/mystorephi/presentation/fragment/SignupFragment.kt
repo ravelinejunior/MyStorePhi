@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.databinding.FragmentSignupBinding
 import br.com.raveline.mystorephi.presentation.listener.NetworkListeners
+import br.com.raveline.mystorephi.presentation.listener.UiState
 import br.com.raveline.mystorephi.presentation.viewmodel.UserViewModel
 import br.com.raveline.mystorephi.presentation.viewmodel.viewmodel_factory.UserViewModelFactory
 import br.com.raveline.mystorephi.utils.CustomDialogLoading
@@ -76,13 +77,13 @@ class SignupFragment : Fragment() {
         lifecycleScope.launch {
             userViewModel.uiStateFlow.collect { state ->
                 when (state) {
-                    UserViewModel.UiState.Initial -> {
+                    UiState.Initial -> {
 
                     }
-                    UserViewModel.UiState.Loading -> {
+                    UiState.Loading -> {
                         CustomDialogLoading().startLoading(requireActivity())
                     }
-                    UserViewModel.UiState.Error -> {
+                    UiState.Error -> {
                         CustomDialogLoading().dismissLoading()
                         Toast.makeText(
                             context,
@@ -90,7 +91,7 @@ class SignupFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    UserViewModel.UiState.NoConnection -> {
+                    UiState.NoConnection -> {
                         CustomDialogLoading().dismissLoading()
                         Toast.makeText(
                             context,
@@ -98,7 +99,7 @@ class SignupFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    UserViewModel.UiState.Success -> {
+                    UiState.Success -> {
                         CustomDialogLoading().dismissLoading()
                         findNavController().navigate(R.id.action_signupFragment_to_homeFragment)
                     }
