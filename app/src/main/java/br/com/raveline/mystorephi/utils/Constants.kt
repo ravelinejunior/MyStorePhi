@@ -1,17 +1,33 @@
 package br.com.raveline.mystorephi.utils
 
 // Firebase
-    //User Database
-    const val userDatabaseReference = "Users"
-    const val userFieldName = "name"
-    const val userFieldEmail = "email"
-    const val userFieldPhoneNumber = "phoneNumber"
-    const val userFieldId = "uid"
+//User Database
+const val userDatabaseReference = "Users"
+const val userFieldName = "name"
+const val userFieldEmail = "email"
+const val userFieldPhoneNumber = "phoneNumber"
+const val userFieldId = "uid"
 
-    //Categories Database
-    const val categoriesDatabaseReference = "Categories"
-    const val categoriesFieldType = "type"
-    const val categoriesFieldImageUrl = "imageUrl"
+//Categories Database
+const val categoriesDatabaseReference = "Categories"
+const val categoriesFieldType = "type"
+const val categoriesFieldImageUrl = "imageUrl"
+
+//Features Database
+const val featuresDatabaseReference = "Features"
+const val featuresFieldName = "name"
+const val featuresFieldImageUrl = "imageUrl"
+const val featuresFieldDescription = "description"
+const val featuresFieldPrice = "price"
+const val featuresFieldRating = "rating"
+
+//BestSell Database
+const val bestSellDatabaseReference = "BestSell"
+const val bestSellFieldName = "name"
+const val bestSellFieldImageUrl = "imageUrl"
+const val bestSellFieldDescription = "description"
+const val bestSellFieldPrice = "price"
+const val bestSellFieldRating = "rating"
 
 
 // Constants

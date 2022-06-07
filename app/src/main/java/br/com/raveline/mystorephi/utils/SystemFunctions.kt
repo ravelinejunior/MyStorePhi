@@ -2,16 +2,12 @@ package br.com.raveline.mystorephi.utils
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -19,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import java.io.ByteArrayOutputStream
+import java.text.DecimalFormat
 
 
 object SystemFunctions {
@@ -61,21 +57,14 @@ object SystemFunctions {
             .error(com.google.android.material.R.drawable.ic_mtrl_chip_close_circle)
 
         Glide.with(context).setDefaultRequestOptions(options)
-            .load(uri).into(this)
+            .load(uri)
+            .centerCrop()
+            .into(this)
     }
 
-    @JvmStatic
-    @BindingAdapter("android:imageUrl")
-    fun loadImage(view: ImageView, url: String?) {
-        view.loadImage(url, getProgressDrawable(view.context))
-    }
-
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path =
-            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Image", null)
-        return Uri.parse(path)
+    fun replaceDotToComma(value:Double):String{
+        val df = DecimalFormat("\$0.###")
+        return df.format(value)
     }
 
     fun isNetworkAvailable(context: Context?): Boolean {

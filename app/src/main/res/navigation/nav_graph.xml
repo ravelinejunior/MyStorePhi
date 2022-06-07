@@ -25,6 +25,9 @@
             app:exitAnim="@anim/slide_wait"
             app:popEnterAnim="@anim/slide_right"
             app:popExitAnim="@anim/slide_wait" />
+        <action
+            android:id="@+id/action_MainFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/LoginFragment"
@@ -91,6 +94,28 @@
         <action
             android:id="@+id/action_homeFragment_to_MainFragment"
             app:destination="@id/MainFragment"
+            app:enterAnim="@anim/slide_right"
+            app:exitAnim="@anim/slide_left"
+            app:popEnterAnim="@anim/slide_right"
+            app:popExitAnim="@anim/slide_left"
+            />
+        <action
+            android:id="@+id/action_homeFragment_to_itemFragment"
+            app:destination="@id/itemFragment"
+            app:enterAnim="@anim/slide_right"
+            app:exitAnim="@anim/slide_left"
+            app:popEnterAnim="@anim/slide_right"
+            app:popExitAnim="@anim/slide_left"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="br.com.raveline.mystorephi.presentation.fragment.ItemFragment"
+        tools:layout="@layout/fragment_item"
+        android:label="ItemFragment" >
+        <action
+            android:id="@+id/action_itemFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
             app:enterAnim="@anim/slide_right"
             app:exitAnim="@anim/slide_left"
             app:popEnterAnim="@anim/slide_right"

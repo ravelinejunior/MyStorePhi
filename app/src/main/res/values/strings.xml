@@ -66,4 +66,7 @@
     <string name="see_all">See All</string>
     <string name="featured">Featured</string>
     <string name="best_sell">Best Sell</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="price_example">$50,89</string>
 </resources>

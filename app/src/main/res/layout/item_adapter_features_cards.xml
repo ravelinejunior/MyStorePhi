@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12sdp"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardViewAdapterFeaturesCards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginVertical="@dimen/_4sdp"
+            android:shadowColor="@color/black_88"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:strokeColor="@android:color/transparent">
+
+            <ImageView
+                android:id="@+id/imageViewAdapterFeaturesCards"
+                android:layout_width="@dimen/_160sdp"
+                android:layout_height="@dimen/_180sdp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:src="@drawable/g_1"
+                android:contentDescription="@string/app_name" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <TextView
+            android:id="@+id/textViewAdapterFeaturesCardsPrice"
+            style="@style/CustomText.Bold.Title_Card"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price_example" />
+
+        <TextView
+            android:id="@+id/text_view_adapter_features_cards_name"
+            style="@style/CustomText.Bold.SubTitle_Card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/name" />
+
+    </LinearLayout>
+</layout>
