@@ -23,13 +23,18 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var auth:FirebaseAuth
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(auth.currentUser != null){
-            findNavController().navigate(R.id.action_MainFragment_to_homeFragment)
+        try {
+
+            if (auth.currentUser != null) {
+                findNavController().navigate(R.id.action_MainFragment_to_homeFragment)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

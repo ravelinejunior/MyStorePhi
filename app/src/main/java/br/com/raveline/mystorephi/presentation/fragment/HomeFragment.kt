@@ -1,5 +1,6 @@
 package br.com.raveline.mystorephi.presentation.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.mystorephi.R
@@ -26,6 +29,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@SuppressLint("UnsafeRepeatOnLifecycleDetector")
 class HomeFragment : Fragment() {
 
     @Inject
@@ -98,62 +102,77 @@ class HomeFragment : Fragment() {
 
     }
 
+
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            homeViewModel.uiStateFlow.collect { state ->
-                when (state) {
-                    UiState.Initial -> {
-                        homeViewModel.getCategories()
-                        homeViewModel.getFeatures()
-                        homeViewModel.getBestSells()
-                    }
-                    UiState.Loading -> {
-                        CustomDialogLoading().startLoading(requireActivity())
-                    }
-                    UiState.Error -> {
-                        CustomDialogLoading().dismissLoading()
-                        Toast.makeText(
-                            context,
-                            getString(R.string.something_wrong_msg),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    UiState.NoConnection -> {
-                        CustomDialogLoading().dismissLoading()
-                        Toast.makeText(
-                            context,
-                            getString(R.string.no_internet_connection_msg),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    UiState.Success -> {
-                        CustomDialogLoading().dismissLoading()
-                    }
-
-                }
-            }
-        }
-
         lifecycleScope.launch {
-            homeViewModel.categoriesFlow.collectLatest { categories ->
-                if (categories.isNotEmpty()) {
-                    homeCardsAdapter.setAdapter(categories)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.uiStateFlow.collectLatest { state ->
+                    when (state) {
+                        UiState.Initial -> {
+                        }
+                        UiState.Loading -> {
+                            CustomDialogLoading().startLoading(requireActivity())
+                        }
+                        UiState.Error -> {
+                            CustomDialogLoading().dismissLoading()
+                            Toast.makeText(
+                                context,
+                                getString(R.string.something_wrong_msg),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        UiState.NoConnection -> {
+                            CustomDialogLoading().dismissLoading()
+                            Toast.makeText(
+                                context,
+                                getString(R.string.no_internet_connection_msg),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        UiState.Success -> {
+                            CustomDialogLoading().dismissLoading()
+                        }
+
+                    }
                 }
+
             }
         }
 
-        lifecycleScope.launchWhenStarted {
-            homeViewModel.featuresFlow.collectLatest { features ->
-                if (features.isNotEmpty()) {
-                    featureCardsAdapter.setAdapter(features)
+        lifecycleScope.launchWhenResumed {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.apply {
+                    categoriesLiveData.observe(viewLifecycleOwner) { categories ->
+                        if (categories.isNotEmpty()) {
+                            homeCardsAdapter.setAdapter(categories)
+                            initRecyclerView()
+                        }
+                    }
+                }
+            }
+
+        }
+        lifecycleScope.launchWhenResumed {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.apply {
+                    bestSellLiveData.observe(viewLifecycleOwner) { bestSells ->
+                        if (bestSells.isNotEmpty()) {
+                            bestSellCardsAdapter.setAdapter(bestSells)
+                            initRecyclerView()
+                        }
+                    }
                 }
             }
         }
-
-        lifecycleScope.launchWhenStarted {
-            homeViewModel.bestSellFlow.collectLatest { bestSells ->
-                if (bestSells.isNotEmpty()) {
-                    bestSellCardsAdapter.setAdapter(bestSells)
+        lifecycleScope.launchWhenResumed {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.apply {
+                    featuresLiveData.observe(viewLifecycleOwner) { features ->
+                        if (features.isNotEmpty()) {
+                            featureCardsAdapter.setAdapter(features)
+                            initRecyclerView()
+                        }
+                    }
                 }
             }
         }
