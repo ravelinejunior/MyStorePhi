@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
     }
 
     private val featureCardsAdapter: ItemAdapterFeaturesCards by lazy {
-        ItemAdapterFeaturesCards()
+        ItemAdapterFeaturesCards(requireParentFragment())
     }
 
     private val bestSellCardsAdapter: ItemAdapterBestSellCards by lazy {

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".presentation.fragment.ItemDetailFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayoutItemDetailFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbarItemDetailFragment"
+                    style="@android:style/Widget.Toolbar.Button.Navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewItemDetailFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayoutItemDetailFragment">
+
+                <ImageView
+                    android:id="@+id/imageViewItemDetailFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/image" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentTitle"
+                style="@style/CustomText.Bold.Title_Card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintStart_toStartOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewItemDetailFragment"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentPrice"
+                style="@style/CustomText.Bold.SubTitle_Card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="#616161"
+                app:layout_constraintStart_toStartOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemDetailFragmentTitle"
+                tools:text="$59,00" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemDetailFragmentPrice" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonItemDetailFragmentRatingValue"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/bg_value_item_card_button"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                tools:ignore="TextContrastCheck"
+                tools:text="4.6" />
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentRatingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:fontFamily="@font/lato"
+                android:text="@string/very_good"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonItemDetailFragmentRatingValue"
+                app:layout_constraintStart_toEndOf="@+id/buttonItemDetailFragmentRatingValue"
+                app:layout_constraintTop_toTopOf="@+id/buttonItemDetailFragmentRatingValue" />
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentReviews"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="@string/_49_reviews_example"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonItemDetailFragmentRatingValue"
+                app:layout_constraintEnd_toEndOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toTopOf="@+id/buttonItemDetailFragmentRatingValue" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonItemDetailFragmentRatingValue" />
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentDesc"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/description"
+                android:textColor="@color/abbey"
+                app:layout_constraintStart_toStartOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentDescription"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/lato"
+                android:minHeight="48dp"
+                android:textColor="#616161"
+                android:textIsSelectable="true"
+                app:layout_constraintEnd_toEndOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintStart_toStartOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemDetailFragmentDesc"
+                tools:text="@string/already_have_an_account_click_here" />
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentSelectSize"
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/lato"
+                android:text="@string/select_size"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemDetailFragmentDescription" />
+
+            <TextView
+                android:id="@+id/textViewItemDetailFragmentSelectColor"
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:alpha="0.7"
+                android:text="@string/select_color"
+                android:textColor="#546E7A"
+                app:layout_constraintEnd_toEndOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemDetailFragmentDescription"
+                tools:ignore="TextContrastCheck" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemDetailFragmentSelectSize" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewItemDetailFragmentSizes"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintBottom_toTopOf="@+id/buttonItemDetailFragmentAddCart"
+                app:layout_constraintEnd_toEndOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/cardViewItemDetailFragment"
+                app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonItemDetailFragmentAddCart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@drawable/bg_value_item_card_button"
+                android:backgroundTint="@color/purple_300"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonItemDetailFragmentBuy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:background="@drawable/bg_value_item_card_button"
+                android:text="@string/buy_now"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline3" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="205dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

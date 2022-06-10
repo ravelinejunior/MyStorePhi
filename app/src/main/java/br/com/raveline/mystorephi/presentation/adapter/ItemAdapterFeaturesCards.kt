@@ -2,19 +2,24 @@ package br.com.raveline.mystorephi.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.data.model.FeaturesModel
 import br.com.raveline.mystorephi.databinding.ItemAdapterFeaturesCardsBinding
+import br.com.raveline.mystorephi.presentation.fragment.HomeFragmentDirections
 import br.com.raveline.mystorephi.utils.ListDiffUtil
 import br.com.raveline.mystorephi.utils.SystemFunctions.replaceDotToComma
 import com.bumptech.glide.Glide
 import java.util.*
 
-class ItemAdapterFeaturesCards : RecyclerView.Adapter<ItemAdapterFeaturesCards.MyViewHolder>() {
+class ItemAdapterFeaturesCards(
+    private val fragment: Fragment
+) : RecyclerView.Adapter<ItemAdapterFeaturesCards.MyViewHolder>() {
 
     private var featureList: List<FeaturesModel> = emptyList()
 
@@ -31,6 +36,15 @@ class ItemAdapterFeaturesCards : RecyclerView.Adapter<ItemAdapterFeaturesCards.M
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val feature = featureList[position]
         holder.binding(feature)
+
+
+        holder.itemView.setOnClickListener {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(feature)
+            fragment.findNavController().navigate(action)
+        }
+
+
     }
 
     override fun getItemCount(): Int = featureList.size
@@ -55,11 +69,6 @@ class ItemAdapterFeaturesCards : RecyclerView.Adapter<ItemAdapterFeaturesCards.M
                     .placeholder(circular)
                     .into(imageViewAdapterFeaturesCards)
 
-                imageViewAdapterFeaturesCards.setOnClickListener {
-                    Navigation.findNavController(itemBinding.root)
-                        .navigate(R.id.action_homeFragment_to_itemFragment)
-                }
-
                 textViewAdapterFeaturesCardsPrice.text =
                     replaceDotToComma(featuresModel.price)
                 textViewAdapterFeaturesCardsName.text = featuresModel.name.replaceFirstChar {
@@ -67,8 +76,8 @@ class ItemAdapterFeaturesCards : RecyclerView.Adapter<ItemAdapterFeaturesCards.M
                         Locale.getDefault()
                     ) else it.toString()
                 }
-            }
 
+            }
 
         }
 
