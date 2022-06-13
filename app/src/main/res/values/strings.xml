@@ -76,4 +76,7 @@
     <string name="select_color">Select Color</string>
     <string name="add_to_cart">Add To Cart</string>
     <string name="buy_now">Buy Now</string>
+    <string name="not_good_string">Not Good</string>
+    <string name="good_string">Good</string>
+    <string name="excellent_string">Excellent</string>
 </resources>

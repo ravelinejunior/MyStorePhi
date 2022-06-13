@@ -6,5 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class SizesModel(
     val selectedSize: String,
-    val isSelected: Boolean = false
+    var isSelected: Boolean = false
 ):Parcelable

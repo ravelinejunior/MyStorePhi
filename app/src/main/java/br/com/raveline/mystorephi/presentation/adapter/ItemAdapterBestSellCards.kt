@@ -2,19 +2,23 @@ package br.com.raveline.mystorephi.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.data.model.BestSellModel
+import br.com.raveline.mystorephi.data.model.bestSellToFeature
 import br.com.raveline.mystorephi.databinding.ItemAdapterBestSellCardsBinding
+import br.com.raveline.mystorephi.presentation.fragment.HomeFragmentDirections
 import br.com.raveline.mystorephi.utils.ListDiffUtil
 import br.com.raveline.mystorephi.utils.SystemFunctions.replaceDotToComma
 import com.bumptech.glide.Glide
 import java.util.*
 
-class ItemAdapterBestSellCards : RecyclerView.Adapter<ItemAdapterBestSellCards.MyViewHolder>() {
+class ItemAdapterBestSellCards(
+    private val fragment: Fragment
+) : RecyclerView.Adapter<ItemAdapterBestSellCards.MyViewHolder>() {
 
     private var bestSellList: List<BestSellModel> = emptyList()
 
@@ -29,8 +33,18 @@ class ItemAdapterBestSellCards : RecyclerView.Adapter<ItemAdapterBestSellCards.M
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val feature = bestSellList[position]
-        holder.binding(feature)
+        val bestSell = bestSellList[position]
+        holder.binding(bestSell)
+
+        holder.itemView.setOnClickListener {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(
+                    bestSellToFeature(
+                        bestSell
+                    )
+                )
+            fragment.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int = bestSellList.size
@@ -54,11 +68,6 @@ class ItemAdapterBestSellCards : RecyclerView.Adapter<ItemAdapterBestSellCards.M
                     .centerCrop()
                     .placeholder(circular)
                     .into(imageViewAdapterBestSellCards)
-
-                imageViewAdapterBestSellCards.setOnClickListener {
-                    Navigation.findNavController(itemBinding.root)
-                        .navigate(R.id.action_homeFragment_to_itemFragment)
-                }
 
                 textViewAdapterBestSellCardsName.text =
                     replaceDotToComma(bestSellModel.price)

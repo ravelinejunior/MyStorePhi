@@ -15,3 +15,14 @@ data class BestSellModel(
     val price: Double,
     val rating: Int
 )
+
+fun bestSellToFeature(bestSellModel: BestSellModel): FeaturesModel {
+    return FeaturesModel(
+        bestSellModel.id,
+        bestSellModel.name,
+        bestSellModel.description,
+        bestSellModel.imageUrl,
+        bestSellModel.price,
+        bestSellModel.rating,
+    )
+}
