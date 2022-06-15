@@ -8,7 +8,8 @@
     android:layout_margin="@dimen/_8sdp"
     app:cardBackgroundColor="@color/mercury"
     app:cardCornerRadius="@dimen/_6sdp"
-    app:cardElevation="@dimen/_12sdp">
+    android:elevation="@dimen/_8sdp"
+>
 
 
     <RadioButton
@@ -19,6 +20,7 @@
         android:backgroundTint="@color/mercury"
         android:button="@android:color/transparent"
         android:checked="false"
+        android:elevation="@dimen/_8sdp"
         android:textAlignment="center"
         android:textColor="@color/black"
         tools:text="S" />

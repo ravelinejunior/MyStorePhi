@@ -88,6 +88,10 @@ class ItemAdapterButtonSizes(
                 sizeList[lastPositionSelected].isSelected = false
                 sizeList[position].isSelected = true
                 lastPositionSelected = position
+            }else{
+                isSelected = false
+                sizeList[lastPositionSelected].isSelected = false
+                lastPositionSelected = -1
             }
             notifyDataSetChanged()
 
@@ -105,35 +109,6 @@ class ItemAdapterButtonSizes(
         SizesModel(selectedSize = "XL"),
         SizesModel(selectedSize = "XXL"),
     )
-
-    /*]
-
-    1) primeiro -> nenhum selecionado
-                    -> lastPosition = position
-                    -> altero valor na lista no indice clicado
-                    -> verificar se lastPosition = -1
-    2) segundo -> ja existe elemento associadp
-                    -> elemento clicado é igual lastPosition?
-
-
-    *  if (b) {
-                    controlIndex = this.bindingAdapterPosition
-                    binding.radioButtonAdapterButtonSize.background = ContextCompat.getDrawable(
-                        fragment.requireContext(), R.drawable.bg_value_item_card_button
-                    )
-                    binding.radioButtonAdapterButtonSize.setTextColor(
-                        R.color.white
-                    )
-                } else {
-                    binding.radioButtonAdapterButtonSize.setBackgroundColor(
-                        R.color.mercury
-                    )
-                    binding.radioButtonAdapterButtonSize.setTextColor(
-                        R.color.black
-                    )
-                }
-    * */
-
 
 }
 

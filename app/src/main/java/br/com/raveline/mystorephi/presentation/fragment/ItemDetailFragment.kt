@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -67,7 +68,10 @@ class ItemDetailFragment : Fragment() {
                 .centerCrop()
                 .placeholder(circular)
                 .into(imageViewItemDetailFragment)
+        }
 
+        itemBinding.buttonItemDetailFragmentBuy.setOnClickListener {
+            findNavController().navigate(R.id.action_itemDetailFragment_to_addressFragment)
         }
     }
 
@@ -86,12 +90,16 @@ class ItemDetailFragment : Fragment() {
     }
 
     private fun setRatingValue(value: Int): String {
-        if (value in 1..2) {
-            return getString(R.string.not_good_string)
-        } else if (value in 3..4) {
-            return getString(R.string.good_string)
-        } else {
-            return getString(R.string.excellent_string)
+        return when (value) {
+            in 1..2 -> {
+                getString(R.string.not_good_string)
+            }
+            in 3..4 -> {
+                getString(R.string.good_string)
+            }
+            else -> {
+                getString(R.string.excellent_string)
+            }
         }
     }
 

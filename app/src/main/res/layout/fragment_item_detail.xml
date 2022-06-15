@@ -191,7 +191,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewItemDetailFragmentSizes"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintBottom_toTopOf="@+id/buttonItemDetailFragmentAddCart"

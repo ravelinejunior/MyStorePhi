@@ -79,4 +79,7 @@
     <string name="not_good_string">Not Good</string>
     <string name="good_string">Good</string>
     <string name="excellent_string">Excellent</string>
+    <string name="address">Address</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="continue_with_payment">Continue With Payment</string>
 </resources>
