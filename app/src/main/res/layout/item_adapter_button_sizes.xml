@@ -8,6 +8,7 @@
     android:layout_margin="@dimen/_8sdp"
     app:cardBackgroundColor="@color/mercury"
     app:cardCornerRadius="@dimen/_6sdp"
+    app:cardElevation="@dimen/_12sdp"
     android:elevation="@dimen/_8sdp"
 >
 

@@ -82,4 +82,9 @@
     <string name="address">Address</string>
     <string name="add_new_address">Add New Address</string>
     <string name="continue_with_payment">Continue With Payment</string>
+    <string name="address_line">Address Line</string>
+    <string name="city">City</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="create_address">Create Address</string>
+    <string name="add_address">Add Address</string>
 </resources>
