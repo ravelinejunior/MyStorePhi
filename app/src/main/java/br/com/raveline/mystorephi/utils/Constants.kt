@@ -34,6 +34,10 @@ const val bestSellFieldPrice = "price"
 const val bestSellFieldRating = "rating"
 const val bestSellDatabaseTable = "BestSellTable"
 
+//Address Database
+const val addressDatabaseReference = "Address"
+const val addressFieldName = "address"
+
 
 // Constants
 const val USER_SHARED_PREFERENCE_KEY = "USER_PREF_KEY"

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.raveline.mystorephi.data.model.AddressModel
 import br.com.raveline.mystorephi.data.model.UserModel
 import br.com.raveline.mystorephi.domain.repositoryImpl.UserRepositoryImpl
 import br.com.raveline.mystorephi.presentation.listener.UiState
@@ -34,6 +35,48 @@ class UserViewModel @Inject constructor(
 
     private val _uiStateFlow = MutableStateFlow<UiState>(UiState.Initial)
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
+
+    init {
+        getUserFromPrefs()
+    }
+
+    fun addAddress(
+        name: String,
+        city: String,
+        address: String,
+        zipCode: String,
+        number: String
+    ) = viewModelScope.launch {
+        try {
+            _uiStateFlow.value = UiState.Loading
+            if (SystemFunctions.isNetworkAvailable(context)) {
+                val addressModel = AddressModel(
+                    "${name.trim().capitalize()}, ${city.trim().capitalize()}, ${
+                        address.trim().capitalize()
+                    }, ${zipCode.trim()}, ${number.trim()}"
+                )
+
+                if (checkNonFilledFields(name, city, address, zipCode, number)) {
+                    repositoryImpl.saveAddress(userLiveData.value?.uid.toString())
+                        .add(addressToMap(addressModel)).addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                _uiStateFlow.value = UiState.Success
+
+                            } else {
+                                _uiStateFlow.value = UiState.Error
+                            }
+                        }
+                } else {
+                    _uiStateFlow.value = UiState.Error
+                }
+            } else {
+                _uiStateFlow.value = UiState.NoConnection
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            _uiStateFlow.value = UiState.Error
+        }
+    }
 
     fun registerUser(email: String, password: String, name: String, phone: String) =
         viewModelScope.launch {
@@ -120,6 +163,37 @@ class UserViewModel @Inject constructor(
         }
     }
 
+    private fun checkNonFilledFields(
+        name: String,
+        city: String,
+        address: String,
+        zipCode: String,
+        number: String
+    ): Boolean {
+        if (name.isNotEmpty()) {
+            if (city.isNotEmpty()) {
+                if (address.isNotEmpty()) {
+                    if (zipCode.isNotEmpty()) {
+                        return number.isNotEmpty()
+                    } else {
+                        return false
+                    }
+                } else {
+                    return false
+                }
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+
+    private fun addressToMap(addressModel: AddressModel): HashMap<String, String> =
+        hashMapOf(
+            addressFieldName to addressModel.address.trim()
+        )
+
     private fun userToMap(userModel: UserModel): HashMap<String, String> {
         return hashMapOf(
             userFieldId to userModel.uid,
@@ -127,6 +201,14 @@ class UserViewModel @Inject constructor(
             userFieldEmail to userModel.email,
             userFieldPhoneNumber to userModel.phoneNumber
         )
+    }
+
+    private fun getUserFromPrefs() {
+        if (sharedPreferences.contains(userSharedSaved)) {
+            val userJson = sharedPreferences.getString(userSharedSaved, null)
+            val gson = Gson()
+            mutableUser.postValue(gson.fromJson(userJson, UserModel::class.java))
+        }
     }
 
 }

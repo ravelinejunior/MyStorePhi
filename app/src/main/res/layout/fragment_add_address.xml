@@ -122,7 +122,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutPhoneNumber"
+            android:id="@+id/textInputLayoutAddressNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
@@ -134,10 +134,10 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPostalCode">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputAddAddressFragmentPhoneNumber"
+                android:id="@+id/textInputAddAddressFragmentAddressNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phone_number"
+                android:hint="@string/address_number"
                 android:inputType="number"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -153,10 +153,10 @@
             android:elevation="@dimen/_16sdp"
             android:text="@string/add_address"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutPhoneNumber"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutAddressNumber"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayoutPhoneNumber"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhoneNumber"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutAddressNumber"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAddressNumber"
             app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

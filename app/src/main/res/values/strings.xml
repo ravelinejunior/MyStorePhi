@@ -60,6 +60,11 @@
     <string name="name_empty_msg">Name cannot be empty!</string>
     <string name="phone_empty_msg">Phone cannot be empty!</string>
     <string name="password_empty_msg">Password cannot be empty!</string>
+    <string name="address_name_empty_msg">Address name cannot be empty!</string>
+    <string name="city_address_empty_msg">Address city cannot be empty!</string>
+    <string name="address_description_empty_msg">Address description cannot be empty!</string>
+    <string name="address_number_empty_msg">Address number cannot be empty!</string>
+    <string name="address_zip_code_empty_msg">Address zip code cannot be empty!</string>
     <string name="something_wrong_msg">Something went wrong!</string>
     <string name="no_internet_connection_msg">No Internet Connection</string>
     <string name="categories">Categories</string>
@@ -87,4 +92,6 @@
     <string name="postal_code">Postal Code</string>
     <string name="create_address">Create Address</string>
     <string name="add_address">Add Address</string>
+    <string name="all_fields_must_be_filled">ALL FIELDS MUST BE FILLED!</string>
+    <string name="address_number">Address Number</string>
 </resources>
