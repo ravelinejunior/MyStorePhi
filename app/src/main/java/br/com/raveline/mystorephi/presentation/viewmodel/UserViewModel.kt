@@ -3,7 +3,6 @@ package br.com.raveline.mystorephi.presentation.viewmodel
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,13 +30,44 @@ class UserViewModel @Inject constructor(
 ) :
     ViewModel() {
     private val mutableUser = MutableLiveData<UserModel>()
-    val userLiveData: LiveData<UserModel> get() = mutableUser
+    private var userModel: UserModel? = null
 
     private val _uiStateFlow = MutableStateFlow<UiState>(UiState.Initial)
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
 
+    private val _addressMutableState = MutableStateFlow(listOf<AddressModel>())
+    val addressFlow: StateFlow<List<AddressModel>> get() = _addressMutableState
+
     init {
         getUserFromPrefs()
+    }
+
+    fun getSavedAddresses() = viewModelScope.launch {
+        val addresses = arrayListOf<AddressModel>()
+
+        _uiStateFlow.value = UiState.Loading
+
+        if (SystemFunctions.isNetworkAvailable(context)) {
+            repositoryImpl.getSavedAddresses(userModel?.uid.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val taskResult = task.result
+                        for (document in taskResult) {
+                            val address = AddressModel(
+                                document.get(addressFieldName).toString()
+                            )
+                            addresses.add(address)
+                        }
+
+                        _addressMutableState.value = addresses
+                        _uiStateFlow.value = UiState.Success
+                    } else {
+                        _uiStateFlow.value = UiState.Error
+                    }
+                }
+        } else {
+            _uiStateFlow.value = UiState.NoConnection
+        }
     }
 
     fun addAddress(
@@ -57,7 +87,7 @@ class UserViewModel @Inject constructor(
                 )
 
                 if (checkNonFilledFields(name, city, address, zipCode, number)) {
-                    repositoryImpl.saveAddress(userLiveData.value?.uid.toString())
+                    repositoryImpl.saveAddress(userModel?.uid.toString())
                         .add(addressToMap(addressModel)).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 _uiStateFlow.value = UiState.Success
@@ -207,7 +237,7 @@ class UserViewModel @Inject constructor(
         if (sharedPreferences.contains(userSharedSaved)) {
             val userJson = sharedPreferences.getString(userSharedSaved, null)
             val gson = Gson()
-            mutableUser.postValue(gson.fromJson(userJson, UserModel::class.java))
+            userModel = (gson.fromJson(userJson, UserModel::class.java))
         }
     }
 

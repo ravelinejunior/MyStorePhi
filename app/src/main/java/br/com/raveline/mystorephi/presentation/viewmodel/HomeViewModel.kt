@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun getCategories() = viewModelScope.launch {
+    private fun getCategories() = viewModelScope.launch {
         delay(200)
         if (categoriesLiveData.value.isNullOrEmpty()) {
             val categories = arrayListOf<CategoryModel>()

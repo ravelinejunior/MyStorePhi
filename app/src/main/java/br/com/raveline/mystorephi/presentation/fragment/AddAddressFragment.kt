@@ -142,7 +142,7 @@ class AddAddressFragment : Fragment() {
             userViewModel.uiStateFlow.collect { state ->
                 when (state) {
                     UiState.Initial -> {
-
+                        CustomDialogLoading().dismissLoading()
                     }
                     UiState.Loading -> {
                         CustomDialogLoading().startLoading(requireActivity())
@@ -165,7 +165,7 @@ class AddAddressFragment : Fragment() {
                     }
                     UiState.Success -> {
                         CustomDialogLoading().dismissLoading()
-                        findNavController().popBackStack()
+                        findNavController().navigate(R.id.action_addAddressFragment_to_addressFragment)
                     }
 
                 }

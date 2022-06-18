@@ -8,6 +8,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -26,5 +27,10 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun saveAddress(userId: String): CollectionReference {
         return firestore.collection(userDatabaseReference).document(userId)
             .collection(addressDatabaseReference)
+    }
+
+    override suspend fun getSavedAddresses(userId: String): Task<QuerySnapshot> {
+        return firestore.collection(userDatabaseReference).document(userId)
+            .collection(addressDatabaseReference).get()
     }
 }
