@@ -1,7 +1,9 @@
 package br.com.raveline.mystorephi.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.raveline.mystorephi.data.model.AddressModel
@@ -11,6 +13,7 @@ import br.com.raveline.mystorephi.utils.ListDiffUtil
 class ItemAdapterAddress : RecyclerView.Adapter<ItemAdapterAddress.MyViewHolder>() {
 
     private var addressList = listOf<AddressModel>()
+    private var radioButton:RadioButton? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
@@ -31,7 +34,29 @@ class ItemAdapterAddress : RecyclerView.Adapter<ItemAdapterAddress.MyViewHolder>
 
         fun binding(addressModel: AddressModel) {
             aBinding.textViewAdapterAddressName.text = addressModel.address
+
+            aBinding.radioButtonAdapterAddress.setOnClickListener {
+                setSelectedRadioButton(it,bindingAdapterPosition)
+            }
+
         }
+
+    }
+
+    private fun setSelectedRadioButton(v: View, position: Int){
+
+        for (model in addressList){
+            model.isSelected = false
+        }
+
+        addressList[position].isSelected = true
+        if(radioButton != null){
+            radioButton?.isChecked = false
+        }
+
+        radioButton = v  as RadioButton
+        radioButton?.isChecked = true
+
 
     }
 

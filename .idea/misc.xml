@@ -3,16 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/junio/StudioProjects/MyStorePhi/app/src/main/res/layout/fragment_add_address.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/junio/StudioProjects/MyStorePhi/app/src/main/res/layout/fragment_address.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/junio/StudioProjects/MyStorePhi/app/src/main/res/layout/fragment_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/junio/StudioProjects/MyStorePhi/app/src/main/res/layout/fragment_item_detail.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/junio/StudioProjects/MyStorePhi/app/src/main/res/layout/fragment_signup.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/junio/StudioProjects/MyStorePhi/app/src/main/res/layout/item_adapter_address.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/junio/StudioProjects/MyStorePhi/app/src/main/res/layout/item_adapter_button_sizes.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/bg_address_screen.xml" value="0.223" />
         <entry key="app/src/main/res/drawable/bg_login_button.xml" value="0.18" />
         <entry key="app/src/main/res/drawable/bg_value_item_card_button.xml" value="0.2025" />
+        <entry key="app/src/main/res/drawable/radio_selector.xml" value="0.1645" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.17592592592592593" />
         <entry key="app/src/main/res/layout/custom_loading_dialog.xml" value="0.3572916666666667" />
