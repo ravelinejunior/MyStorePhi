@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.raveline.mystorephi.data.database.dao.UserAddressDao
 import br.com.raveline.mystorephi.data.model.AddressModel
 import br.com.raveline.mystorephi.data.model.UserModel
 import br.com.raveline.mystorephi.domain.repositoryImpl.UserRepositoryImpl
@@ -16,15 +17,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val repositoryImpl: UserRepositoryImpl,
     private val firestore: FirebaseFirestore,
+    private val dao: UserAddressDao,
     @ApplicationContext val context: Context,
     private val sharedPreferences: SharedPreferences
 ) :
@@ -43,8 +47,18 @@ class UserViewModel @Inject constructor(
     }
 
     fun getSavedAddresses() = viewModelScope.launch {
-        val addresses = arrayListOf<AddressModel>()
+        dao.getAllSavedAddress().collect { addressList ->
+            if (addressList.isNotEmpty()) {
+                _addressMutableState.emit(addressList)
+            }else {
+                requestAddress()
+            }
+        }
 
+    }
+
+    private fun requestAddress() = viewModelScope.launch {
+        val addresses = arrayListOf<AddressModel>()
         _uiStateFlow.value = UiState.Loading
 
         if (SystemFunctions.isNetworkAvailable(context)) {
@@ -52,13 +66,20 @@ class UserViewModel @Inject constructor(
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val taskResult = task.result
-                        for (document in taskResult) {
-                            val address = AddressModel(
-                                document.get(addressFieldName).toString()
-                            )
-                            addresses.add(address)
-                        }
+                        dao.deleteAddressTable()
+                        viewModelScope.launch {
+                            withContext(IO) {
+                                for (document in taskResult) {
+                                    val address = AddressModel(
+                                        0,
+                                        document.get(addressFieldName).toString()
+                                    )
+                                    addresses.add(address)
+                                    dao.insertAddress(address)
+                                }
+                            }
 
+                        }
                         _addressMutableState.value = addresses
                         _uiStateFlow.value = UiState.Success
                     } else {
@@ -81,6 +102,7 @@ class UserViewModel @Inject constructor(
             _uiStateFlow.value = UiState.Loading
             if (SystemFunctions.isNetworkAvailable(context)) {
                 val addressModel = AddressModel(
+                    0,
                     "${name.trim().capitalize()}, ${city.trim().capitalize()}, ${
                         address.trim().capitalize()
                     }, ${zipCode.trim()}, ${number.trim()}"
@@ -91,6 +113,11 @@ class UserViewModel @Inject constructor(
                         .add(addressToMap(addressModel)).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 _uiStateFlow.value = UiState.Success
+                                viewModelScope.launch {
+                                    withContext(IO) {
+                                        repositoryImpl.insertLocalAddress(addressModel)
+                                    }
+                                }
 
                             } else {
                                 _uiStateFlow.value = UiState.Error

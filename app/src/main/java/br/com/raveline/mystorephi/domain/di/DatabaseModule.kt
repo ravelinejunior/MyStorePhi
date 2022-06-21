@@ -6,6 +6,7 @@ import br.com.raveline.mystorephi.data.database.AppDatabase
 import br.com.raveline.mystorephi.data.database.dao.BestSellDao
 import br.com.raveline.mystorephi.data.database.dao.CategoryDao
 import br.com.raveline.mystorephi.data.database.dao.FeaturesDao
+import br.com.raveline.mystorephi.data.database.dao.UserAddressDao
 import br.com.raveline.mystorephi.utils.databaseName
 import dagger.Module
 import dagger.Provides
@@ -43,4 +44,9 @@ class DatabaseModule {
     @Singleton
     fun providesFeaturesDao(appDatabase: AppDatabase): FeaturesDao =
         appDatabase.featuresDao()
+
+    @Provides
+    @Singleton
+    fun providesUserAddressDao(appDatabase: AppDatabase): UserAddressDao =
+        appDatabase.userAddressDao()
 }

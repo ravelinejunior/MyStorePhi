@@ -37,9 +37,10 @@ const val bestSellDatabaseTable = "BestSellTable"
 //Address Database
 const val addressDatabaseReference = "Address"
 const val addressFieldName = "address"
-
+const val addressLocalDatabaseTable = "AddressTable"
 
 // Constants
 const val USER_SHARED_PREFERENCE_KEY = "USER_PREF_KEY"
 const val userSharedSaved = "UserModel"
+const val sizesDatabaseTable = "SizeTable"
 
