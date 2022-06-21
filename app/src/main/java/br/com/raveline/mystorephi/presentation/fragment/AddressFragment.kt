@@ -37,7 +37,7 @@ class AddressFragment : Fragment() {
     }
 
     private val addressAdapter by lazy {
-        ItemAdapterAddress()
+        ItemAdapterAddress(userViewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +63,10 @@ class AddressFragment : Fragment() {
 
         binding.buttonAddressFragmentAddAddress.setOnClickListener {
             findNavController().navigate(R.id.action_addressFragment_to_addAddressFragment)
+        }
+
+        binding.buttonAddressFragmentContinue.setOnClickListener {
+            findNavController().navigate(R.id.action_addressFragment_to_paymentFragment)
         }
 
         initObserver()

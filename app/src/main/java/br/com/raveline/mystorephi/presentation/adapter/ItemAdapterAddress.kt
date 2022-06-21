@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.raveline.mystorephi.data.model.AddressModel
 import br.com.raveline.mystorephi.databinding.ItemAdapterAddressBinding
+import br.com.raveline.mystorephi.presentation.viewmodel.UserViewModel
 import br.com.raveline.mystorephi.utils.ListDiffUtil
 
-class ItemAdapterAddress : RecyclerView.Adapter<ItemAdapterAddress.MyViewHolder>() {
+class ItemAdapterAddress(
+    private val userViewModel: UserViewModel
+) : RecyclerView.Adapter<ItemAdapterAddress.MyViewHolder>() {
 
     private var addressList = listOf<AddressModel>()
     private var radioButton:RadioButton? = null
@@ -39,6 +42,11 @@ class ItemAdapterAddress : RecyclerView.Adapter<ItemAdapterAddress.MyViewHolder>
                 setSelectedRadioButton(it,bindingAdapterPosition)
             }
 
+            aBinding.cardViewAdapterAddress.setOnLongClickListener {
+                deleteAddress(addressModel)
+                true
+            }
+
         }
 
     }
@@ -58,6 +66,10 @@ class ItemAdapterAddress : RecyclerView.Adapter<ItemAdapterAddress.MyViewHolder>
         radioButton?.isChecked = true
 
 
+    }
+
+    private fun deleteAddress(address:AddressModel){
+        userViewModel.deleteAddress(address)
     }
 
     fun setData(addresses: List<AddressModel>) {

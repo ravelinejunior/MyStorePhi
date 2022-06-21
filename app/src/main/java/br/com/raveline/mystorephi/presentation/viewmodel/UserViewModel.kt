@@ -135,6 +135,11 @@ class UserViewModel @Inject constructor(
         }
     }
 
+    fun deleteAddress(address: AddressModel) = viewModelScope.launch(IO){
+        dao.deleteAddress(address)
+        getSavedAddresses()
+    }
+
     fun registerUser(email: String, password: String, name: String, phone: String) =
         viewModelScope.launch {
             try {

@@ -94,4 +94,11 @@
     <string name="add_address">Add Address</string>
     <string name="all_fields_must_be_filled">ALL FIELDS MUST BE FILLED!</string>
     <string name="address_number">Address Number</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="discount">Discount</string>
+    <string name="shipping">Shipping</string>
+    <string name="total">Total</string>
+    <string name="add_card">Add Card</string>
+    <string name="checkout">Checkout</string>
+    <string name="payment">Payment</string>
 </resources>
