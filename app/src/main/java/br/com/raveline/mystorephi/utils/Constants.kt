@@ -39,10 +39,14 @@ const val addressDatabaseReference = "Address"
 const val addressFieldName = "address"
 const val addressLocalDatabaseTable = "AddressTable"
 
-// Constants
+//Constants
 const val USER_SHARED_PREFERENCE_KEY = "USER_PREF_KEY"
 const val userSharedSaved = "UserModel"
 const val sizesDatabaseTable = "SizeTable"
 const val pricePreferenceNameKey = "PRICE_KEY"
 const val totalPriceBundleKey = "totalPriceBundleKey"
+
+//Key
+const val razorKeyId = "rzp_test_UZ88jHov3GPgiS"
+const val razorKeySecret = "cQIHT2pD3qsxjE62AdOPViL7"
 
