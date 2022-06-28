@@ -19,6 +19,7 @@ import br.com.raveline.mystorephi.presentation.listener.UiState
 import br.com.raveline.mystorephi.presentation.viewmodel.UserViewModel
 import br.com.raveline.mystorephi.presentation.viewmodel.viewmodel_factory.UserViewModelFactory
 import br.com.raveline.mystorephi.utils.CustomDialogLoading
+import com.razorpay.Checkout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -43,7 +44,7 @@ class AddressFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-    }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

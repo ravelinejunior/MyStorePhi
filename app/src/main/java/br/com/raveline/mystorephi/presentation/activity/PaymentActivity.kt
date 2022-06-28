@@ -1,18 +1,19 @@
-package br.com.raveline.mystorephi.presentation.fragment
+package br.com.raveline.mystorephi.presentation.activity
 
 import android.app.Activity
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
+import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.data.model.FeaturesModel
+import br.com.raveline.mystorephi.databinding.ActivityPaymentBinding
 import br.com.raveline.mystorephi.databinding.FragmentPaymentBinding
 import br.com.raveline.mystorephi.presentation.viewmodel.HomeViewModel
 import br.com.raveline.mystorephi.presentation.viewmodel.UserViewModel
@@ -31,10 +32,11 @@ import org.json.JSONObject
 import javax.inject.Inject
 import kotlin.math.round
 
-@AndroidEntryPoint
-class PaymentFragment : Fragment(), PaymentResultListener {
 
-    private var _itemBinding: FragmentPaymentBinding? = null
+@AndroidEntryPoint
+class PaymentActivity : AppCompatActivity(),PaymentResultListener {
+
+    private var _itemBinding: ActivityPaymentBinding? = null
     private val itemBinding get() = _itemBinding!!
 
     @Inject
@@ -52,28 +54,17 @@ class PaymentFragment : Fragment(), PaymentResultListener {
         userViewModelFactory
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-        //getUserFromPrefs()
-        Checkout.preload(requireContext())
-    }
+        _itemBinding = DataBindingUtil.setContentView(this,R.layout.activity_payment)
+        setContentView(itemBinding.root)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _itemBinding = FragmentPaymentBinding.inflate(layoutInflater, container, false)
+        Checkout.preload(this)
 
-        return itemBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         itemBinding.apply {
             toolbarItemDetailFragment.setNavigationOnClickListener {
-                findNavController().popBackStack()
             }
 
             buttonPaymentFragmentCheckout.setOnClickListener {
@@ -82,6 +73,11 @@ class PaymentFragment : Fragment(), PaymentResultListener {
 
         }
 
+
+    }
+
+    override fun onStart() {
+        super.onStart()
         initObservers()
     }
 
@@ -91,7 +87,7 @@ class PaymentFragment : Fragment(), PaymentResultListener {
                 if (feature != null) {
                     args = feature
                 } else {
-                    getUserFromPrefs()
+                    getFeaturesFromJson()
                 }
                 displayData()
             }
@@ -114,7 +110,7 @@ class PaymentFragment : Fragment(), PaymentResultListener {
         }
     }
 
-    private fun getUserFromPrefs() {
+    private fun getFeaturesFromJson() {
         if (sharedPreferences.contains(totalPriceBundleKey)) {
             val featureJson = sharedPreferences.getString(totalPriceBundleKey, null)
             val gson = Gson()
@@ -127,7 +123,7 @@ class PaymentFragment : Fragment(), PaymentResultListener {
         /*
         *  You need to pass current activity in order to let Razorpay create CheckoutActivity
         * */
-        val activity: Activity = requireActivity()
+        val activity: Activity = this
         val co = Checkout()
         co.setKeyID(razorKeyId)
 
@@ -170,11 +166,11 @@ class PaymentFragment : Fragment(), PaymentResultListener {
     }
 
     override fun onPaymentSuccess(result: String?) {
-        Toast.makeText(requireContext(), result, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
     }
 
     override fun onPaymentError(errorCode: Int, errorMessage: String?) {
-        Toast.makeText(requireContext(), "$errorMessage with $errorCode", Toast.LENGTH_SHORT).show()
-        Log.e("TAGPay", "startPayment: $errorCode $errorMessage ")
+        Toast.makeText(this, "$errorMessage with $errorCode", Toast.LENGTH_SHORT).show()
+        Log.i("TAGPay", "startPayment: $errorCode $errorMessage ")
     }
 }

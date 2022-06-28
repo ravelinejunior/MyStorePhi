@@ -186,6 +186,15 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_addressFragment_to_paymentActivity"
+            app:destination="@id/paymentActivity"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            />
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
@@ -222,4 +231,9 @@
             app:popUpToInclusive="true" />
 
     </fragment>
+    <activity
+        android:id="@+id/paymentActivity"
+        android:name="br.com.raveline.mystorephi.presentation.activity.PaymentActivity"
+        tools:layout="@layout/activity_payment"
+        android:label="PaymentActivity" />
 </navigation>

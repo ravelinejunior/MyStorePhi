@@ -34,7 +34,7 @@ class UserViewModel @Inject constructor(
 ) :
     ViewModel() {
     private val mutableUser = MutableLiveData<UserModel>()
-    private var userModel: UserModel? = null
+    var userModel: UserModel? = null
 
     private val _uiStateFlow = MutableStateFlow<UiState>(UiState.Initial)
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
