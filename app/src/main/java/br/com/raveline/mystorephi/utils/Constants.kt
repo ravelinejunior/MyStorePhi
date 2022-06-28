@@ -43,4 +43,6 @@ const val addressLocalDatabaseTable = "AddressTable"
 const val USER_SHARED_PREFERENCE_KEY = "USER_PREF_KEY"
 const val userSharedSaved = "UserModel"
 const val sizesDatabaseTable = "SizeTable"
+const val pricePreferenceNameKey = "PRICE_KEY"
+const val totalPriceBundleKey = "totalPriceBundleKey"
 

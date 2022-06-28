@@ -11,13 +11,15 @@ import br.com.raveline.mystorephi.data.model.BestSellModel
 import br.com.raveline.mystorephi.data.model.bestSellToFeature
 import br.com.raveline.mystorephi.databinding.ItemAdapterBestSellCardsBinding
 import br.com.raveline.mystorephi.presentation.fragment.HomeFragmentDirections
+import br.com.raveline.mystorephi.presentation.viewmodel.HomeViewModel
 import br.com.raveline.mystorephi.utils.ListDiffUtil
 import br.com.raveline.mystorephi.utils.SystemFunctions.replaceDotToComma
 import com.bumptech.glide.Glide
 import java.util.*
 
 class ItemAdapterBestSellCards(
-    private val fragment: Fragment
+    private val fragment: Fragment,
+    private val homeViewModel: HomeViewModel
 ) : RecyclerView.Adapter<ItemAdapterBestSellCards.MyViewHolder>() {
 
     private var bestSellList: List<BestSellModel> = emptyList()
@@ -44,6 +46,7 @@ class ItemAdapterBestSellCards(
                     )
                 )
             fragment.findNavController().navigate(action)
+            homeViewModel.setValueFromFeature(bestSellToFeature(bestSell))
         }
     }
 

@@ -47,11 +47,11 @@ class HomeFragment : Fragment() {
     }
 
     private val featureCardsAdapter: ItemAdapterFeaturesCards by lazy {
-        ItemAdapterFeaturesCards(requireParentFragment())
+        ItemAdapterFeaturesCards(requireParentFragment(), homeViewModel)
     }
 
     private val bestSellCardsAdapter: ItemAdapterBestSellCards by lazy {
-        ItemAdapterBestSellCards(requireParentFragment())
+        ItemAdapterBestSellCards(requireParentFragment(), homeViewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

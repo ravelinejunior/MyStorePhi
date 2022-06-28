@@ -12,13 +12,15 @@ import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.data.model.FeaturesModel
 import br.com.raveline.mystorephi.databinding.ItemAdapterFeaturesCardsBinding
 import br.com.raveline.mystorephi.presentation.fragment.HomeFragmentDirections
+import br.com.raveline.mystorephi.presentation.viewmodel.HomeViewModel
 import br.com.raveline.mystorephi.utils.ListDiffUtil
 import br.com.raveline.mystorephi.utils.SystemFunctions.replaceDotToComma
 import com.bumptech.glide.Glide
 import java.util.*
 
 class ItemAdapterFeaturesCards(
-    private val fragment: Fragment
+    private val fragment: Fragment,
+    private val homeViewModel: HomeViewModel
 ) : RecyclerView.Adapter<ItemAdapterFeaturesCards.MyViewHolder>() {
 
     private var featureList: List<FeaturesModel> = emptyList()
@@ -42,6 +44,7 @@ class ItemAdapterFeaturesCards(
             val action =
                 HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(feature)
             fragment.findNavController().navigate(action)
+            homeViewModel.setValueFromFeature(feature)
         }
 
 

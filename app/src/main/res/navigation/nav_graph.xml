@@ -220,5 +220,6 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/addressFragment"
             app:popUpToInclusive="true" />
+
     </fragment>
 </navigation>

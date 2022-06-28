@@ -1,9 +1,11 @@
 package br.com.raveline.mystorephi.presentation.fragment
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,8 +15,11 @@ import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.databinding.FragmentItemDetailBinding
 import br.com.raveline.mystorephi.presentation.adapter.ItemAdapterButtonSizes
 import br.com.raveline.mystorephi.utils.SystemFunctions
+import br.com.raveline.mystorephi.utils.totalPriceBundleKey
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
@@ -27,6 +32,9 @@ class ItemDetailFragment : Fragment() {
     private val itemAdapter: ItemAdapterButtonSizes by lazy {
         ItemAdapterButtonSizes(requireParentFragment())
     }
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +79,10 @@ class ItemDetailFragment : Fragment() {
         }
 
         itemBinding.buttonItemDetailFragmentBuy.setOnClickListener {
+            sharedPreferences.edit(true) {
+                val productJson = Gson().toJson(feature)
+                putString(totalPriceBundleKey, productJson)
+            }
             findNavController().navigate(R.id.action_itemDetailFragment_to_addressFragment)
         }
     }

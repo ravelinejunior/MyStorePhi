@@ -51,10 +51,16 @@ class HomeViewModel @Inject constructor(
     private val _mutableBestSellLiveData = MutableLiveData<List<BestSellModel>>()
     val bestSellLiveData: LiveData<List<BestSellModel>> get() = _mutableBestSellLiveData
 
+    private val featureStateFlow: MutableStateFlow<FeaturesModel?> = MutableStateFlow(null)
+    val featureFlow: MutableStateFlow<FeaturesModel?> get() = featureStateFlow
+
     init {
         initRepo()
     }
 
+    fun setValueFromFeature(feature: FeaturesModel) = viewModelScope.launch {
+        featureStateFlow.value = feature
+    }
     private fun initRepo() {
         viewModelScope.launch {
             localRepository.getLocalCategories().collectLatest {
