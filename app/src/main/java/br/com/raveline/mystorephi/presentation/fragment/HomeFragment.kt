@@ -2,10 +2,9 @@ package br.com.raveline.mystorephi.presentation.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,12 +14,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.databinding.FragmentHomeBinding
+import br.com.raveline.mystorephi.presentation.activity.MainActivity
 import br.com.raveline.mystorephi.presentation.adapter.ItemAdapterBestSellCards
 import br.com.raveline.mystorephi.presentation.adapter.ItemAdapterFeaturesCards
 import br.com.raveline.mystorephi.presentation.adapter.ItemAdapterHomeCards
 import br.com.raveline.mystorephi.presentation.listener.UiState
 import br.com.raveline.mystorephi.presentation.viewmodel.HomeViewModel
+import br.com.raveline.mystorephi.presentation.viewmodel.UserViewModel
 import br.com.raveline.mystorephi.presentation.viewmodel.viewmodel_factory.HomeViewModelFactory
+import br.com.raveline.mystorephi.presentation.viewmodel.viewmodel_factory.UserViewModelFactory
 import br.com.raveline.mystorephi.utils.CustomDialogLoading
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,11 +32,17 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @SuppressLint("UnsafeRepeatOnLifecycleDetector")
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(){
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModelFactory
     private val homeViewModel: HomeViewModel by viewModels { homeViewModelFactory }
+
+    @Inject
+    lateinit var userViewModelFactory: UserViewModelFactory
+    private val userViewModel: UserViewModel by viewModels {
+        userViewModelFactory
+    }
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -65,9 +73,16 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.textViewHomeFragmentCategories.setOnClickListener {
-            auth.signOut()
-            findNavController().navigate(R.id.action_homeFragment_to_MainFragment)
+
+        binding.apply {
+            toolbarHomeFragment.inflateMenu(R.menu.menu_main)
+
+            toolbarHomeFragment.setOnMenuItemClickListener{
+                userViewModel.logout(auth)
+                findNavController().navigate(R.id.action_homeFragment_to_MainFragment)
+                true
+            }
+
         }
 
 
@@ -178,8 +193,27 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.menuMainSignOut -> {
+                userViewModel.logout(auth)
+                findNavController().navigate(R.id.action_homeFragment_to_MainFragment)
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
 }

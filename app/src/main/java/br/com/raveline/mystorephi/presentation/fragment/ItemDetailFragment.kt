@@ -52,7 +52,11 @@ class ItemDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        itemBinding.apply {
+            toolbarItemDetailFragment.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
+        }
         displayData()
     }
 

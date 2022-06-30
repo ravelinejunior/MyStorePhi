@@ -98,6 +98,9 @@
             app:destination="@id/MainFragment"
             app:enterAnim="@anim/slide_right"
             app:exitAnim="@anim/slide_left"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/MainFragment"
             app:popEnterAnim="@anim/slide_right"
             app:popExitAnim="@anim/slide_left" />
         <action

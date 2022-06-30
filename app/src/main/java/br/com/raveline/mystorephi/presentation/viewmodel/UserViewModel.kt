@@ -12,6 +12,7 @@ import br.com.raveline.mystorephi.data.model.UserModel
 import br.com.raveline.mystorephi.domain.repositoryImpl.UserRepositoryImpl
 import br.com.raveline.mystorephi.presentation.listener.UiState
 import br.com.raveline.mystorephi.utils.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
@@ -223,6 +224,10 @@ class UserViewModel @Inject constructor(
         } catch (e: FirebaseAuthException) {
             _uiStateFlow.value = UiState.Error
         }
+    }
+
+    fun logout(firebaseAuth: FirebaseAuth) = viewModelScope.launch {
+        firebaseAuth.signOut()
     }
 
     private fun checkNonFilledFields(
