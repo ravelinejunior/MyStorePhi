@@ -63,7 +63,7 @@ object SystemFunctions {
     }
 
     fun replaceDotToComma(value:Double):String{
-        val df = DecimalFormat("\$0.###")
+        val df = DecimalFormat("\$0.####")
         return df.format(value)
     }
 

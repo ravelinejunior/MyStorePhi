@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.databinding.FragmentHomeBinding
-import br.com.raveline.mystorephi.presentation.activity.MainActivity
 import br.com.raveline.mystorephi.presentation.adapter.ItemAdapterBestSellCards
 import br.com.raveline.mystorephi.presentation.adapter.ItemAdapterFeaturesCards
 import br.com.raveline.mystorephi.presentation.adapter.ItemAdapterHomeCards
@@ -32,7 +30,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @SuppressLint("UnsafeRepeatOnLifecycleDetector")
-class HomeFragment : Fragment(){
+class HomeFragment : Fragment() {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModelFactory
@@ -77,10 +75,20 @@ class HomeFragment : Fragment(){
         binding.apply {
             toolbarHomeFragment.inflateMenu(R.menu.menu_main)
 
-            toolbarHomeFragment.setOnMenuItemClickListener{
+            toolbarHomeFragment.setOnMenuItemClickListener {
                 userViewModel.logout(auth)
                 findNavController().navigate(R.id.action_homeFragment_to_MainFragment)
                 true
+            }
+
+            textViewHomeFragmentSeeAllCategories.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_itemFragment)
+            }
+            textViewHomeFragmentSeeAllFeatured.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_itemFragment)
+            }
+            textViewHomeFragmentSeeAllBestSell.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_itemFragment)
             }
 
         }
@@ -195,12 +203,12 @@ class HomeFragment : Fragment(){
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_main,menu)
+        inflater.inflate(R.menu.menu_main, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        when (item.itemId) {
             R.id.menuMainSignOut -> {
                 userViewModel.logout(auth)
                 findNavController().navigate(R.id.action_homeFragment_to_MainFragment)

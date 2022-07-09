@@ -1,6 +1,7 @@
 package br.com.raveline.mystorephi.domain.repositoryImpl
 
 import br.com.raveline.mystorephi.data.repository.AdapterRepository
+import br.com.raveline.mystorephi.utils.allListedItemsDatabaseReference
 import br.com.raveline.mystorephi.utils.bestSellDatabaseReference
 import br.com.raveline.mystorephi.utils.categoriesDatabaseReference
 import br.com.raveline.mystorephi.utils.featuresDatabaseReference
@@ -23,6 +24,10 @@ class AdapterRepositoryImpl @Inject constructor(
 
     override suspend fun getBesSellRepository(): Task<QuerySnapshot> {
         return firestore.collection(bestSellDatabaseReference).get()
+    }
+
+    override suspend fun getAllListedItems(): Task<QuerySnapshot> {
+        return firestore.collection(allListedItemsDatabaseReference).get()
     }
 
 }

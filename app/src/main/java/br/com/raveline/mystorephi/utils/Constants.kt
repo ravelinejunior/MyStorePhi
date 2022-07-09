@@ -25,6 +25,16 @@ const val featuresFieldPrice = "price"
 const val featuresFieldRating = "rating"
 const val featuresDatabaseTable = "FeaturesTable"
 
+//All Items Database
+const val allListedItemsDatabaseReference = "AllListedItems"
+const val itemsFieldName = "name"
+const val itemsFieldImageUrl = "imageUrl"
+const val itemsFieldDescription = "description"
+const val itemsFieldType = "type"
+const val itemsFieldPrice = "price"
+const val itemsFieldRating = "rating"
+const val itemsDatabaseTable = "AllListedItemsTable"
+
 //BestSell Database
 const val bestSellDatabaseReference = "BestSell"
 const val bestSellFieldName = "name"

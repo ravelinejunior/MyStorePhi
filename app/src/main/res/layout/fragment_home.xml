@@ -49,7 +49,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
         <TextView
-            android:id="@+id/textViewHomeFragmentSelectAllCategories"
+            android:id="@+id/textViewHomeFragmentSeeAllCategories"
             style="@style/CustomText.Bold.SubTitle_Card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

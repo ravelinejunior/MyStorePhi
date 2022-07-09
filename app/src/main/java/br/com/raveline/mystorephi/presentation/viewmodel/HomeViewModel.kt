@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.raveline.mystorephi.data.model.AllListedItemsModel
 import br.com.raveline.mystorephi.data.model.BestSellModel
 import br.com.raveline.mystorephi.data.model.CategoryModel
 import br.com.raveline.mystorephi.data.model.FeaturesModel
@@ -33,14 +34,8 @@ class HomeViewModel @Inject constructor(
     private val _uiStateFlow = MutableStateFlow<UiState>(UiState.Initial)
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
 
-    private val categoriesStateFlow = MutableStateFlow(listOf<CategoryModel>())
-    val categoriesFlow: StateFlow<List<CategoryModel>> get() = categoriesStateFlow
-
-    private val featuresStateFlow = MutableStateFlow(listOf<FeaturesModel>())
-    val featuresFlow: StateFlow<List<FeaturesModel>> get() = featuresStateFlow
-
-    private val bestSellStateFlow = MutableStateFlow(listOf<BestSellModel>())
-    val bestSellFlow: StateFlow<List<BestSellModel>> get() = bestSellStateFlow
+    private val mutableAllItemsFlow = MutableStateFlow(listOf<AllListedItemsModel>())
+    val allItemsFlow: StateFlow<List<AllListedItemsModel>> get() = mutableAllItemsFlow
 
     private val _mutableCategoriesLiveData = MutableLiveData<List<CategoryModel>>()
     val categoriesLiveData: LiveData<List<CategoryModel>> get() = _mutableCategoriesLiveData
@@ -61,6 +56,7 @@ class HomeViewModel @Inject constructor(
     fun setValueFromFeature(feature: FeaturesModel) = viewModelScope.launch {
         featureStateFlow.value = feature
     }
+
     private fun initRepo() {
         viewModelScope.launch {
             localRepository.getLocalCategories().collectLatest {
@@ -106,8 +102,6 @@ class HomeViewModel @Inject constructor(
                             )
                             categories.add(category)
                         }
-
-                        categoriesStateFlow.value = categories
                         _mutableCategoriesLiveData.postValue(categories)
                         _uiStateFlow.value = UiState.Success
 
@@ -162,7 +156,6 @@ class HomeViewModel @Inject constructor(
                             featureList.add(feature)
                         }
 
-                        featuresStateFlow.value = featureList
                         _mutableFeaturesLiveData.postValue(featureList)
                         _uiStateFlow.value = UiState.Success
 
@@ -193,6 +186,46 @@ class HomeViewModel @Inject constructor(
 
     }
 
+    fun getAllListedItems() = viewModelScope.launch {
+        if (allItemsFlow.value.isEmpty()) {
+            val allItems = arrayListOf<AllListedItemsModel>()
+
+            _uiStateFlow.value = UiState.Loading
+
+            if (SystemFunctions.isNetworkAvailable(context)) {
+                repository.getAllListedItems().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val result = task.result
+                        for (doc in result) {
+                            val item = AllListedItemsModel(
+                                id = 0,
+                                name = doc.get(itemsFieldName).toString(),
+                                description = doc.get(itemsFieldDescription).toString(),
+                                imageUrl = doc.get(itemsFieldImageUrl).toString(),
+                                type = doc.get(itemsFieldType).toString(),
+                                price = doc.get(itemsFieldPrice).toString().toDouble(),
+                                rating = doc.get(itemsFieldRating).toString().toInt(),
+                            )
+                            allItems.add(item)
+                        }
+
+                        viewModelScope.launch {
+                            mutableAllItemsFlow.emit(allItems)
+                            _uiStateFlow.value = UiState.Success
+                        }
+
+                    } else {
+                        _uiStateFlow.value = UiState.Error
+                    }
+                }
+            } else {
+                _uiStateFlow.value = UiState.NoConnection
+            }
+        } else {
+            _uiStateFlow.value = UiState.Error
+        }
+    }
+
     private fun getBestSells() = viewModelScope.launch {
         delay(200)
         if (bestSellLiveData.value.isNullOrEmpty()) {
@@ -216,7 +249,6 @@ class HomeViewModel @Inject constructor(
                             bestSells.add(bestSell)
                         }
 
-                        bestSellStateFlow.value = bestSells
                         _mutableBestSellLiveData.postValue(bestSells)
                         _uiStateFlow.value = UiState.Success
 

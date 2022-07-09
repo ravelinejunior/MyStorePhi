@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardViewAdapterAllItems"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_4sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardElevation="@dimen/_8sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewAdapterAllItems"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@drawable/g_1" />
+
+        <TextView
+            android:id="@+id/textViewAdapterAllItemsName"
+            style="@style/CustomText.Bold.Title_Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_4sdp"
+            android:padding="@dimen/_4sdp"
+            android:textAlignment="center"
+            tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/textViewAdapterAllItemsPrice"
+            style="@style/CustomText.Bold.Title_Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_4sdp"
+            android:padding="@dimen/_4sdp"
+            android:textAlignment="center"
+            tools:text="@string/app_name" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
