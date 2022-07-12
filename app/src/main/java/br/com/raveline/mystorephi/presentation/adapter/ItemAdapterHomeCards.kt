@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.data.model.CategoryModel
 import br.com.raveline.mystorephi.databinding.ItemAdapterHomeCardsBinding
+import br.com.raveline.mystorephi.presentation.fragment.HomeFragmentDirections
 import br.com.raveline.mystorephi.utils.ListDiffUtil
 import com.bumptech.glide.Glide
 
@@ -51,7 +52,8 @@ class ItemAdapterHomeCards : RecyclerView.Adapter<ItemAdapterHomeCards.MyViewHol
                     .into(imageViewAdapterHomeCards)
 
                 imageViewAdapterHomeCards.setOnClickListener {
-                    Navigation.findNavController(itemBinding.root).navigate(R.id.action_homeFragment_to_itemFragment)
+                    val actions = HomeFragmentDirections.actionHomeFragmentToItemFragment().setType(categoryModel.type)
+                    Navigation.findNavController(itemBinding.root).navigate(actions)
                 }
             }
 

@@ -186,45 +186,6 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    fun getAllListedItems() = viewModelScope.launch {
-        if (allItemsFlow.value.isEmpty()) {
-            val allItems = arrayListOf<AllListedItemsModel>()
-
-            _uiStateFlow.value = UiState.Loading
-
-            if (SystemFunctions.isNetworkAvailable(context)) {
-                repository.getAllListedItems().addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val result = task.result
-                        for (doc in result) {
-                            val item = AllListedItemsModel(
-                                id = 0,
-                                name = doc.get(itemsFieldName).toString(),
-                                description = doc.get(itemsFieldDescription).toString(),
-                                imageUrl = doc.get(itemsFieldImageUrl).toString(),
-                                type = doc.get(itemsFieldType).toString(),
-                                price = doc.get(itemsFieldPrice).toString().toDouble(),
-                                rating = doc.get(itemsFieldRating).toString().toInt(),
-                            )
-                            allItems.add(item)
-                        }
-
-                        viewModelScope.launch {
-                            mutableAllItemsFlow.emit(allItems)
-                            _uiStateFlow.value = UiState.Success
-                        }
-
-                    } else {
-                        _uiStateFlow.value = UiState.Error
-                    }
-                }
-            } else {
-                _uiStateFlow.value = UiState.NoConnection
-            }
-        } else {
-            _uiStateFlow.value = UiState.Error
-        }
-    }
 
     private fun getBestSells() = viewModelScope.launch {
         delay(200)
@@ -277,5 +238,74 @@ class HomeViewModel @Inject constructor(
             }
         }
 
+    }
+
+
+    fun getAllListedItems(type: String) = viewModelScope.launch {
+        if (allItemsFlow.value.isEmpty()) {
+            val allItems = arrayListOf<AllListedItemsModel>()
+
+            _uiStateFlow.value = UiState.Loading
+
+            if (SystemFunctions.isNetworkAvailable(context)) {
+                if (type == "all" || type.isEmpty()) {
+                    repository.getAllListedItems().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val result = task.result
+                            for (doc in result) {
+                                val item = AllListedItemsModel(
+                                    id = 0,
+                                    name = doc.get(itemsFieldName).toString(),
+                                    description = doc.get(itemsFieldDescription).toString(),
+                                    imageUrl = doc.get(itemsFieldImageUrl).toString(),
+                                    type = doc.get(itemsFieldType).toString(),
+                                    price = doc.get(itemsFieldPrice).toString().toDouble(),
+                                    rating = doc.get(itemsFieldRating).toString().toInt(),
+                                )
+                                allItems.add(item)
+                            }
+
+                            viewModelScope.launch {
+                                mutableAllItemsFlow.emit(allItems)
+                                _uiStateFlow.value = UiState.Success
+                            }
+
+                        } else {
+                            _uiStateFlow.value = UiState.Error
+                        }
+                    }
+                } else {
+                    repository.getAllListedItemsByType(type).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val result = task.result
+                            for (doc in result) {
+                                val item = AllListedItemsModel(
+                                    id = 0,
+                                    name = doc.get(itemsFieldName).toString(),
+                                    description = doc.get(itemsFieldDescription).toString(),
+                                    imageUrl = doc.get(itemsFieldImageUrl).toString(),
+                                    type = doc.get(itemsFieldType).toString(),
+                                    price = doc.get(itemsFieldPrice).toString().toDouble(),
+                                    rating = doc.get(itemsFieldRating).toString().toInt(),
+                                )
+                                allItems.add(item)
+                            }
+
+                            viewModelScope.launch {
+                                mutableAllItemsFlow.emit(allItems)
+                                _uiStateFlow.value = UiState.Success
+                            }
+
+                        } else {
+                            _uiStateFlow.value = UiState.Error
+                        }
+                    }
+                }
+            } else {
+                _uiStateFlow.value = UiState.NoConnection
+            }
+        } else {
+            _uiStateFlow.value = UiState.Error
+        }
     }
 }

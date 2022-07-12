@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.mystorephi.R
 import br.com.raveline.mystorephi.databinding.FragmentItemBinding
@@ -36,6 +38,8 @@ class ItemFragment : Fragment() {
         ItemAdapterAllListedItems(homeViewModel)
     }
 
+    private val args:ItemFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -47,7 +51,7 @@ class ItemFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentItemBinding.inflate(inflater, container, false)
-        homeViewModel.getAllListedItems()
+        homeViewModel.getAllListedItems(args.type)
         return binding.root
     }
 
@@ -107,7 +111,7 @@ class ItemFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recyclerViewItemFragment.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(context,2)
             adapter = itemsAdapter
         }
     }

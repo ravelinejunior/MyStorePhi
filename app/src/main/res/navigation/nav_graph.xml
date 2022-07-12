@@ -126,10 +126,12 @@
         <action
             android:id="@+id/action_itemFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/slide_right" />
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue="all" />
     </fragment>
     <fragment
         android:id="@+id/itemDetailFragment"

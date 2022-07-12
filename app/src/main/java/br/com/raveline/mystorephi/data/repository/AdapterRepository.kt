@@ -8,4 +8,5 @@ interface AdapterRepository {
     suspend fun getFeaturesRepository():Task<QuerySnapshot>
     suspend fun getBesSellRepository():Task<QuerySnapshot>
     suspend fun getAllListedItems():Task<QuerySnapshot>
+    suspend fun getAllListedItemsByType(type:String):Task<QuerySnapshot>
 }
